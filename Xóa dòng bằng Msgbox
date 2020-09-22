@@ -1,0 +1,31 @@
+Sub Ten_macro()
+  Dim ThongDiepXoa as String
+    ThongDiepXoa = "Chọn dòng có nội dung"
+  Dim DongXoa as Long
+    DongXoa = ActiveCell.Row
+  Dim lr as Long
+    lr = DongCuoi(Sheet2,1)
+  
+  If DongXoa>2 And DongXoa<=lr And lr>2 Then
+    Dim CanhBaoXoaDong as Integer
+      CanhBaoXoaDong = MsgBox("Noi dung", vbOkcancel + vbInformation + vbDefaultButton2, "Tittle")
+    
+    Select Case CanhBaoXoaDong
+      Case vbOk
+        Sheet2.Range("A"&DongXoa&":AH"&DongXoa).ClearContents
+        Sheet2.Range("A"&DongXoa&":AH"&DongXoa).Interior.ThemeColor = xlNone
+        Data_Sapxep 'Là 1 macro record lại thao tác sort bảng tính
+        Msgbox "Da xoa thanh cong!"
+      Case vbCancel
+        Exit Sub
+    End Select
+  Else
+    MsgBox ThongDiepXoa
+    Exit Sub
+  End If
+End Sub
+
+'Tạo thêm Function
+Function DongCuoi(Ws as Worksheet,col as Integer) as Long
+    DongCuoi = Ws.Cells(Rows.Count,1).End(xlUp).Row
+End Function
