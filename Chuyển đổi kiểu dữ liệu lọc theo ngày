@@ -1,0 +1,7 @@
+Sub Loc_ngay()
+Dim a As Long
+Dim b As Long
+    a = CLng(Sheet3.Range("G1").Value)
+    b = CLng(Sheet3.Range("G2").Value)
+    ActiveSheet.Range("$A$1:$C$13").AutoFilter Field:=1, Criteria1:= ">=" & a, Operator:=xlAnd, Criteria2:="<=" & b
+End Sub
