@@ -1,0 +1,18 @@
+'Tạo checkbox hàng loạt từ insert symbols checkbox. Sử dụng Private Sub
+If Target.count > 1 Then Exit Sub   'Cau lenh de loai bo loi viec boi den nhieu dong
+If not intersect(Target,Range("Vùng đặt checkbox")) is nothing Then
+  If Target.value = "ký tự ticked þ" Then
+    Target.value = "ký tự unticked ¨"
+   else
+    Target.value = "ký tự ticked þ"
+   End If
+End If
+
+'Code tạo checkbox chọn All
+Sub chon_All()
+  If Sheet1.Checkboxes("Tên checkbox all").value = 1 Then
+      Sheet1.Range("Vùng đặt checkbox").value = "ký tự ticked þ"
+   else
+      Sheet1.Range("Vùng đặt checkbox").value = "ký tự unticked ¨"
+  End If
+End Sub
