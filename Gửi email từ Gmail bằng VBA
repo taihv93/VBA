@@ -65,3 +65,12 @@ End Sub
 'BUOC 2: THIET LAP GMAIL VÀ MAT KHAU
 'BUOC 3: OPEN TUY CHON LESSSECUREAPPS CỦA GOOGLE: https://myaccount.google.com/lesssecureapps
 'BUOC 4: VIET CODE DE GUI THU DI
+Sub Send_email()
+    For i = "dong muon gui mail trong bang du lieu" to "dong muon gui mail trong bang du lieu"
+        Call Sub Send_Email_With_Gmail(sMailFrom, sMailTo, sSubject, sBody, sAttachment)
+                                        ("taihv272@gmail.com", _
+                                        Sheet1.Cells(i, cot chua email trong bang du lieu).Value, _
+                                        "Tieu de email" _ 'co the tham chieu toa do title co san tu excel
+                                        "Noi dung email" _ 'co the tham chieu toa do noi dung co san tu excel
+                                        Sheet1.Cells(i, cot chua duong link file attachment cua nguoi can gui).Value)
+End sub
