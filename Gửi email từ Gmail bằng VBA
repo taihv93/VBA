@@ -1,0 +1,67 @@
+'Buoc 1: Thiet lap code gui email
+Sub Send_Email_With_Gmail(sMailFrom, sMailTo, sSubject, sBody, sAttachment)
+
+    Dim newMail As Object
+    Dim mailConfiguration As Object
+    Dim msConfigURL As String
+    Dim fields As Variant
+    
+    On Error GoTo errHandle
+    
+    ' Điều chỉnh lại thiết lập trong Google
+    ' https://myaccount.google.com/lesssecureapps
+    
+    Set newMail = CreateObject("CDO.Message")
+    Set mailConfiguration = CreateObject("CDO.Configuration")
+
+    mailConfiguration.Load -1
+    
+    Set fields = mailConfiguration.fields
+    
+    With newMail
+        .bodypart.Charset = "utf-8" '  hỗ trợ UTF-8 - tiếng Việt
+        .Subject = sSubject
+        .From = sMailFrom
+        .To = sMailTo
+        .CC = ""
+        .BCC = ""
+        .TextBody = sBody
+        .AddAttachment sAttachment
+    End With
+    
+    msConfigURL = "http://schemas.microsoft.com/cdo/configuration"
+    
+    With fields
+        .Item(msConfigURL & "/smtpusessl") = True
+        .Item(msConfigURL & "/smtpauthenticate") = 1
+        
+        .Item(msConfigURL & "/smtpserver") = "smtp.gmail.com"
+        .Item(msConfigURL & "/smtpserverport") = 465
+        .Item(msConfigURL & "/sendusing") = 2
+        
+        .Item(msConfigURL & "/sendusername") = "" ' <- Thay địa chỉ email của bạn vào đây
+        .Item(msConfigURL & "/sendpassword") = "" ' <- Thay mật khẩu email của bạn vào đây
+        
+        .Update
+    
+    End With
+    
+    newMail.Configuration = mailConfiguration
+    newMail.Send
+    
+    Debug.Print "E-Mail has been sent to " & sMailTo, vbInformation
+    
+exit_line:
+    '// Xoá object, tiết kiệm bộ nhớ
+    Set newMail = Nothing
+    Set mailConfiguration = Nothing
+    
+    Exit Sub
+    
+errHandle:
+    MsgBox "Error: " & Err.Description, vbInformation
+End Sub
+
+'BUOC 2: THIET LAP GMAIL VÀ MAT KHAU
+'BUOC 3: OPEN TUY CHON LESSSECUREAPPS CỦA GOOGLE: https://myaccount.google.com/lesssecureapps
+'BUOC 4: VIET CODE DE GUI THU DI
