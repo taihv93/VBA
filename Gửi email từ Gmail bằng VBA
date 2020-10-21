@@ -71,8 +71,8 @@ Sub Send_email()
         Call Send_Email_With_Gmail(sMailFrom, sMailTo, sSubject, sBody, sAttachment)
                                         ("taihv272@gmail.com", _
                                         Sheet1.Cells(i, cot chua email trong bang du lieu).Value, _
-                                        "Tieu de email" _ 'co the tham chieu toa do title co san tu excel
-                                        "Noi dung email" _ 'co the tham chieu toa do noi dung co san tu excel
+                                        "Tieu de email", _ 'co the tham chieu toa do title co san tu excel
+                                        "Noi dung email", _ 'co the tham chieu toa do noi dung co san tu excel
                                         Sheet1.Cells(i, cot chua duong link file attachment cua nguoi can gui).Value)
          Application.Wait 5000
      Next
