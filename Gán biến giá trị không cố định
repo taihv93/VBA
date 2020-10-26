@@ -1,5 +1,0 @@
-Sub bien_khongcodinh()
-Dim LastRow As Long
-LastRow = Sheet1.Cells(Rows.Count, 1).End(xlUp).Row + 1
-Sheet1.Range("A" & LastRow).Value = Sheet2.Range("B2").Value
-End Sub
