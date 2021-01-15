@@ -1,0 +1,15 @@
+Sub ImportXMLtoList()
+  Dim strTargetFile As String
+  Dim wb as Workbook
+
+     Application.Screenupdating = False
+     Application.DisplayAlerts = False
+     strTargetFile = "đường đẫn file"
+     Set wb = Workbooks.OpenXML(Filename:=strTargetFile, LoadOption:=xlXmlLoadImportToList)
+     Application.DisplayAlerts = True
+
+     wb.Sheets(1).UsedRange.Copy ThisWorkbook.Sheets("Sheet2").Range("A1")
+     wb.Close False
+     Application.Screenupdating = True
+
+End Sub
