@@ -28,9 +28,16 @@ Sub GopDuLieu_Tongquat()
             lr_KQ = wb_KQ.Sheets("Data").Range("A" & Rows.Count).End(xlUp).Row
             'Pham vi du lieu = Khoang cach
         'Them du lieu
+            'Tao dieu kien ngan chan du lieu bi trung bang ham countifs
+        'Dim kieu As Integer
+        'kieu = Application.WorksheetFunction.CountIfs(wb_kq.Sheets(2).Range("A6:A" & lr_kq), wb_dl.Sheets(1).Range("E2"), wb_kq.Sheets(2).Range("C6:C" & lr_kq), wb_dl.Sheets(1).Range("G2"))
+        If kieu >= 1 Then
+            MsgBox "Du lieu da bi trung"
+            Exit Sub
+        Else
         wb_KQ.Sheets("Data").Range("A" & lr_KQ + 1 & ":C" & lr_KQ + khoangcach).Value = _
             wb_select.Sheets("Sheet1").Range("A" & fr & ":C" & lr).Value
-        
+        End if
         'Dong workbook
         wb_select.Close SaveChanges:=False
         
