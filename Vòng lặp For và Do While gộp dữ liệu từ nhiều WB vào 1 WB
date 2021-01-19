@@ -1,0 +1,91 @@
+Sub GopDuLieu_Tongquat()
+    'Tao thu muc mo file
+  With Application.FileDialog(msoFileDialogFilePicker)
+        .AllowMultiSelect = True
+    If .Show = -1 Then 'co thuc hien chon noi dung
+        'Xac dinh file duoc chon
+        Dim i As Long
+        For i = 1 To .SelectedItems.Count
+        'Gan bien cho cac workbook
+        Dim wb_KQ As Workbook
+        Dim wb_select As Workbook
+            Set wb_KQ = ThisWorkbook
+            Set wb_select = Workbooks.Open(.SelectedItems(i))
+        'Them du lieu tu wb khac
+        'Xac dinh dong cuoi wb cho du lieu
+        Dim lr As Long
+            lr = wb_select.Sheets("Sheet1").Range("A" & Rows.Count).End(xlUp).Row
+        'Xac dinh khoang cach du lieu
+            'Khoang cach = Dongcuoi - dongdau
+        Dim fr As Long
+            fr = 2
+        Dim khoangcach As Long
+            khoangcach = lr - fr + 1
+        'Noi nhan
+            'Xac dinh dong cuoi noi nhan
+        Dim lr_KQ As Long
+            lr_KQ = wb_KQ.Sheets("Data").Range("A" & Rows.Count).End(xlUp).Row
+            'Pham vi du lieu = Khoang cach
+        'Them du lieu
+            'Tao dieu kien ngan chan du lieu bi trung bang ham countifs
+        'Dim kieu As Integer
+        'kieu = Application.WorksheetFunction.CountIfs(wb_kq.Sheets(2).Range("A6:A" & lr_kq), wb_dl.Sheets(1).Range("E2"), wb_kq.Sheets(2).Range("C6:C" & lr_kq), wb_dl.Sheets(1).Range("G2"))
+        If kieu >= 1 Then
+            MsgBox "Du lieu da bi trung"
+            Exit Sub
+        Else
+        wb_KQ.Sheets("Data").Range("A" & lr_KQ + 1 & ":C" & lr_KQ + khoangcach).Value = _
+            wb_select.Sheets("Sheet1").Range("A" & fr & ":C" & lr).Value
+        End if
+        'Dong workbook
+        wb_select.Close SaveChanges:=False
+        Next i
+     End if
+  End With
+End Sub
+--------------------------------------------------------------
+Sub tonghop_dulieu2()
+With Application.FileDialog(msoFileDialogFolderPicker)
+    .AllowMultiSelect = False
+    If .Show = -1 Then
+        Dim duongdan As String
+        Dim tenfile As String
+            duongdan = .SelectedItems(1) & "\"
+            tenfile = "*BangLuong*.xls*"
+        Dim file_duoc_mo As String
+            file_duoc_mo = Dir(duongdan & tenfile)
+            
+        Do While file_duoc_mo <> ""
+        
+        Dim wb1 As Workbook, wb2 As Workbook
+            Set wb1 = ThisWorkbook
+            Set wb2 = Workbooks.Open(Filename:=duongdan & file_duoc_mo)
+        
+        Dim lr1 As Long
+            lr1 = wb1.Sheets(2).Range("A" & Rows.Count).End(xlUp).Row
+        Dim lr2 As Long
+            lr2 = wb2.Sheets(1).Range("A" & Rows.Count).End(xlUp).Row
+        Dim fr2 As Long
+            fr2 = 8
+        Dim kc As Long
+            kc = lr2 - fr2 + 1
+            
+        Dim dk As Long
+            dk = Application.WorksheetFunction.CountIfs(wb1.Sheets(2).Range("A6:A" & lr1), wb2.Sheets(1).Range("E2"), wb1.Sheets(2).Range("C6:C" & lr1), wb2.Sheets(1).Range("G2"))
+            
+            If dk >= 1 Then
+                MsgBox "Du lieu da bi trung"
+                Exit Sub
+            Else
+                wb1.Sheets(2).Range("A" & lr1 + 1 & ":BM" & lr1 + kc).Value = _
+                wb2.Sheets(1).Range("A" & fr2 & ":BM" & lr2).Value
+                
+                wb2.Close savechanges:=False
+            End If
+            
+            'Xac dinh lai file khac duoc mo
+            file_duoc_mo = Dir
+        Loop
+    End If
+End With
+End Sub
